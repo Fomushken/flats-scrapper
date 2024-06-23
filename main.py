@@ -2,37 +2,35 @@ import asyncio
 import logging
 import sys
 
-from aiogram import Bot, Dispatcher, html, F
+from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart
-from aiogram.types import Message
 from aiogram.fsm.storage.redis import RedisStorage
-from service.scrap_baires import scrap_argenprop, headers, url
-from handlers import scrap_handlers
+from handlers import scrap_handlers, other_handlers, commands_handlers
 from redis.asyncio.client import Redis
 from config import load_config
-import json
+from keyboards.set_menu import set_main_menu
 
 async def main() -> None:
 
     config = load_config()
 
+    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+
     redis = Redis()
     storage = RedisStorage(redis=redis)
     dp = Dispatcher(storage=storage)
 
-    @dp.message(CommandStart())
-    async def command_start_handler(message: Message) -> None:
-        await message.answer(f'Hello, {html.bold(message.from_user.full_name)}!')
+    await set_main_menu(bot)
 
+    dp.include_router(commands_handlers.rt)
     dp.include_router(scrap_handlers.rt)
+    dp.include_router(other_handlers.rt)
 
-    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout, format='%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s')
     asyncio.run(main())
