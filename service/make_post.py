@@ -28,15 +28,9 @@ item: dict[str, dict[str, str]|list[str, str]] = {
    "link": "https://www.argenprop.com/departamento-en-alquiler-en-las-canitas-2-ambientes--15819736"
 }
 
-text = 'Квартира по адресу: {}\nНазвание: {}\nСтоимость: {}{} + {}\nОписание: {}\n<a href="{}">Ссылка</a>'.format(item['details']['address'],
-                                                 translator.translate(item['details']['title'], dest='ru').text,
-                                                 item['details']['price'], item['details']['currency'], item['details']['expensas'],
-                                                 translator.translate(item['details']['about'], dest='ru').text,
-                                                 item['link'])
-
 def make_post(item, language):
     media_group = [InputMediaPhoto(media=url) for url in item['images']]
-    text = f'<a href="{item['link']}">{translator.translate(item['details']['title'], dest=language).text}</a>\n\n{translator.translate(item['details']['about'], dest=language).text}\n\nАдрес: {item['details']['address']}\nПлощадь: {item['details']['area']}\nКомнат: {item['details']['rooms']}\nВозраст дома: {translator.translate(item['details']['building_age'], dest=language).text}\n\nЦена: {item['details']['currency']}{item['details']['price']}'
+    text = f'<a href="{item['link']}">{translator.translate(item['details']['title'], dest=language).text}</a>\n\n{translator.translate(item['details']['about'], dest=language).text}\n\nАдрес: {item['details']['address']}\nПлощадь: {item['details']['area']}\nКомнат: {item['details']['rooms']}\nВозраст дома: {translator.translate(item['details']['building_age'], dest=language).text}\n\nЦена: {item['details']['currency']}{item['details']['price']} + {item['details']['expensas']} expensas'
     return {
         'media': media_group,
         'text': text

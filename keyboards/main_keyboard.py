@@ -9,10 +9,19 @@ main_kb = ReplyKeyboardMarkup(keyboard=[
     resize_keyboard=True,
     one_time_keyboard=True)
 
-send_announcement_btn = KeyboardButton(text=KEYBOARDS['send_announcement_btn'])
+subscribe_btn = KeyboardButton(text=KEYBOARDS['subscribe_btn'])
 back_btn = KeyboardButton(text=KEYBOARDS['back_btn'])
 
 baires_kb = ReplyKeyboardMarkup(keyboard=[
-    [send_announcement_btn],
+    [subscribe_btn],
     [back_btn]
 ], resize_keyboard=True)
+
+unsubscribe_btn = KeyboardButton(text=KEYBOARDS['unsubscribe_btn'])
+
+subscribers_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [unsubscribe_btn],
+        [back_btn]
+    ]
+, resize_keyboard=True)
