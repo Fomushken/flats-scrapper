@@ -28,7 +28,7 @@ item: dict[str, dict[str, str]|list[str, str]] = {
    "link": "https://www.argenprop.com/departamento-en-alquiler-en-las-canitas-2-ambientes--15819736"
 }
 
-def make_post(item, language):
+def make_post(item, language='ru'):
     media_group = [InputMediaPhoto(media=url) for url in item['images']]
     text = f'<a href="{item['link']}">{translator.translate(item['details']['title'], dest=language).text}</a>\n\n{translator.translate(item['details']['about'], dest=language).text}\n\nАдрес: {item['details']['address']}\nПлощадь: {item['details']['area']}\nКомнат: {item['details']['rooms']}\nВозраст дома: {translator.translate(item['details']['building_age'], dest=language).text}\n\nЦена: {item['details']['currency']}{item['details']['price']} + {item['details']['expensas']} expensas'
     return {

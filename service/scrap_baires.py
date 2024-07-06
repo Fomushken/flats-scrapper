@@ -1,7 +1,8 @@
-import requests
 from bs4 import BeautifulSoup
 from googletrans import Translator
 import json
+from .make_post import make_post
+from redis.asyncio import Redis
 import re
 import aiohttp
 import asyncio
@@ -41,32 +42,59 @@ def get_details(item):
 
     return res
 
-async def scrap_argenprop(headers, url):
+async def scrap_argenprop(headers, url, redis: Redis):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as response:
-            # html = requests.get(url, headers=headers).content
             if response.status == 200:
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
                 results = soup.find_all('div', attrs={'class': 'listing__item'})
-    # response = requests.get(url, headers).content
-    # soup = BeautifulSoup(html.content, 'html.parser')
-    # results = soup.find_all('div', attrs={'class': 'listing__item'})
 
     flats_dict = {}
+    new_ads = []
 
     for item in results:
         item_id = item.get('id')
         if item_id:
             item_photos = get_images_urls(item)
-            flats_dict[item['id']] = {}
-            flats_dict[item['id']]['images'] = item_photos
-            flats_dict[item['id']]['details'] = get_details(item)
-            flats_dict[item['id']]['link'] = 'https://www.argenprop.com' + item.find('a')['href']
-    print(json.dumps(flats_dict, indent=4))
+            details = get_details(item)
+            link = 'https://www.argenprop.com' + item.find('a')['href']
+            if not await redis.sismember('ads_ids', item_id):
+                new_ads.append({
+                    'id': item_id,
+                    'images': item_photos,
+                    'details': details,
+                    'link': link
+                })
+                await redis.sadd('ads_ids', item_id)
+            flats_dict[item['id']] = {
+                'images': item_photos,
+                'details': details,
+                'link': link
+            }
+    await redis.set('latest_ads', json.dumps(flats_dict))
+    return new_ads
 
-async def main():
-    task = asyncio.create_task(scrap_argenprop(headers, url))
-    await task
+async def notify_users(new_ads, redis: Redis, bot):
+    subscribers = await redis.smembers('subscribers')
+    for ad in new_ads:
+        message = make_post(ad)
+        for subscriber in subscribers:
+            await bot.send_media_group(subscriber, message['media'])
+            await bot.send_message(subscriber, message['text'])
 
-asyncio.run(main())
+async def scheduled_scrap(bot):
+    redis = Redis()
+    new_ads = await scrap_argenprop(headers, url, redis)
+    if new_ads:
+        await notify_users(new_ads, redis, bot)
+    await redis.close()
+
+# async def do_scrap():
+#     redis = await aioredis.create_redis_pool('redis://localhost')
+#     new_ads = await scrap_argenprop(headers, url, redis)
+#     redis.close()
+#     # task = asyncio.create_task(scrap_argenprop(headers, url))
+#     # await task
+
+# asyncio.run(do_scrap())
