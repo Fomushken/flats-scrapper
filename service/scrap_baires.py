@@ -89,12 +89,3 @@ async def scheduled_scrap(bot):
     if new_ads:
         await notify_users(new_ads, redis, bot)
     await redis.close()
-
-# async def do_scrap():
-#     redis = await aioredis.create_redis_pool('redis://localhost')
-#     new_ads = await scrap_argenprop(headers, url, redis)
-#     redis.close()
-#     # task = asyncio.create_task(scrap_argenprop(headers, url))
-#     # await task
-
-# asyncio.run(do_scrap())

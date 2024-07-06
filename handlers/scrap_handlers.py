@@ -7,8 +7,7 @@ from lexicon.lexicon_ru import KEYBOARDS, LEXICON
 from service.make_post import make_post, item
 from keyboards.main_keyboard import baires_kb, main_kb, subscribers_keyboard
 from states.states import FSMBairesScrap
-from service.redis_helper import add_subscriber
-import json
+from service.redis_helper import add_subscriber, remove_subscriber
 
 rt = Router()
 
@@ -19,23 +18,20 @@ async def baires_handler(message:Message, state: FSMContext) -> None:
 
 @rt.message(F.text == KEYBOARDS['subscribe_btn'], StateFilter(FSMBairesScrap.on_baires))
 async def subscribe_handler(message: Message, state: FSMContext) -> None:
-    # post = make_post(item=item, language='ru')
     user_id = message.from_user.id
     await add_subscriber(user_id)
     await state.set_state(FSMBairesScrap.subscribed)
     await message.answer(text=LEXICON['subscribe'], reply_markup=subscribers_keyboard)
-    # await message.answer_media_group(media=post['media'])
-    # await message.answer(text=post['text'])
 
 
 @rt.message(F.text == KEYBOARDS['unsubscribe_btn'], StateFilter(FSMBairesScrap.subscribed))
 async def unsubscribe_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(FSMBairesScrap.on_main)
+    await remove_subscriber(message.from_user.id)
     await message.answer(text=LEXICON['unsubscribe'], reply_markup=main_kb)
 
 
 @rt.message(F.text == KEYBOARDS['back_btn'])
 async def back_to_main_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(FSMBairesScrap.on_main)
-    # await state.set_data()
     await message.answer(text='Возвращаю назад', reply_markup=main_kb)
