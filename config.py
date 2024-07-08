@@ -14,9 +14,14 @@ class TgBot:
     admin_ids: str
 
 @dataclass
+class RedisConfig:
+    url: str
+
+@dataclass
 class Config:
     tg_bot: TgBot
     db: DBConfig
+    redis: RedisConfig
 
 
 
@@ -31,9 +36,12 @@ def load_config(path: str | None = None) -> Config:
             admin_ids=list(map(int, env.list('ADMIN_IDS')))
         ),
         db=DBConfig(
-            databate=env('DATABASE'),
+            databate=env("DATABASE"),
             db_host=env("DB_HOST"),
             db_user=env("DB_USER"),
             db_password=env("DB_PASSWORD")
+        ),
+        redis=RedisConfig(
+            url=env("REDIS_URL")
         )
     )

@@ -29,7 +29,7 @@ async def periodic_scrap(bot):
 async def main() -> None:
     config = load_config()
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    redis = Redis()
+    redis = Redis.from_url(config.redis.url)
     storage = RedisStorage(redis=redis)
     dp = Dispatcher(storage=storage)
 

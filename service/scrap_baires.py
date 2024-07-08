@@ -1,11 +1,12 @@
 from bs4 import BeautifulSoup
 from googletrans import Translator
 import json
+
+from config import load_config
 from .make_post import make_post
 from redis.asyncio import Redis
 import re
 import aiohttp
-import asyncio
 
 translator = Translator()
 headers = {
@@ -84,7 +85,8 @@ async def notify_users(new_ads, redis: Redis, bot):
             await bot.send_message(subscriber, message['text'])
 
 async def scheduled_scrap(bot):
-    redis = Redis()
+    config = load_config()
+    redis = Redis.from_url(config.redis.url)
     new_ads = await scrap_argenprop(headers, url, redis)
     if new_ads:
         await notify_users(new_ads, redis, bot)
