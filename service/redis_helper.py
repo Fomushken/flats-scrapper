@@ -1,11 +1,14 @@
 import redis.asyncio as redis
 
+from config import load_config
+
 redis_client = None
 
 async def get_redis():
+    config = load_config()
     global redis_client
     if not redis_client:
-        redis_client = redis.from_url("redis://localhost")
+        redis_client = redis.from_url(config.redis.url)
     return redis_client
 
 async def add_subscriber(user_id):
