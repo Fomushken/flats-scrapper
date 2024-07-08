@@ -73,7 +73,6 @@ async def scrap_argenprop(headers, url, redis: Redis):
                 'details': details,
                 'link': link
             }
-    await redis.set('latest_ads', json.dumps(flats_dict))
     return new_ads
 
 async def notify_users(new_ads, redis: Redis, bot):
