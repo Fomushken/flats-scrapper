@@ -34,4 +34,4 @@ async def unsubscribe_handler(message: Message, state: FSMContext) -> None:
 @rt.message(F.text == KEYBOARDS['back_btn'])
 async def back_to_main_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(FSMBairesScrap.on_main)
-    await message.answer(text='Возвращаю назад', reply_markup=main_kb)
+    await message.answer(text=LEXICON['back'], reply_markup=main_kb)

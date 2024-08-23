@@ -6,7 +6,8 @@ LEXICON: dict[str, str] = {
     # '/mydev': 'later',
     'unsubscribe': 'You\'ve unsibscribed',
     'subscribe': 'You have subscribed',
-    'to_baires': 'Press the button below'
+    'to_baires': 'Press the button below',
+    'back': 'Returning back'
 }
 
 COMMANDS: dict[str, str] = {
