@@ -4,7 +4,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters import StateFilter
 from service.scrap_baires import scrap_argenprop, headers, url
 from lexicon.lexicon_ru import KEYBOARDS, LEXICON
-from service.make_post import make_post, item
 from keyboards.main_keyboard import baires_kb, main_kb, subscribers_keyboard
 from states.states import FSMBairesScrap
 from service.redis_helper import add_subscriber, remove_subscriber
