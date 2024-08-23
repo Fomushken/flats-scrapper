@@ -1,5 +1,11 @@
 LEXICON: dict[str, str] = {
-    
+    '/start': '<b>Hello, {}!</b>\nI am a multifunctional bot, still in training,'  # the user's full name is inserted in place of {}
+'Enter the /help command to learn about my functionality\n\n'
+'<b>Below you can choose a category</b>',
+    '/help': 'I can currently only send raw data about apartments in Buenos Aires from the Argenprop website. To do this, just click the button below.',
+    '/mydev': 'Попозже доработаю эту команду',
+    'unsubscribe': 'You\'ve unsibscribed',
+    'subscribe': 'You have subscribed'
 }
 
 COMMANDS: dict[str, str] = {
@@ -8,7 +14,10 @@ COMMANDS: dict[str, str] = {
     '/mydev': 'Contact my developer'
 }
 
-CALLBACKS: dict[str, str] = {
-
+KEYBOARDS: dict[str, str] = {
+    'to_baires_btn': 'Buenos Aires Listings',
+    'back_btn': 'Back',
+    'subscribe_btn': 'Subscribe',
+    'unsubscribe_btn': 'Unsubscribe'
 }
 

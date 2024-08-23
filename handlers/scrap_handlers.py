@@ -16,6 +16,7 @@ async def baires_handler(message:Message, state: FSMContext) -> None:
     await state.set_state(FSMBairesScrap.on_baires)
     await message.answer(text='Выбери ниже кнопку', reply_markup=baires_kb)
 
+
 @rt.message(F.text == KEYBOARDS['subscribe_btn'], StateFilter(FSMBairesScrap.on_baires))
 async def subscribe_handler(message: Message, state: FSMContext) -> None:
     user_id = message.from_user.id

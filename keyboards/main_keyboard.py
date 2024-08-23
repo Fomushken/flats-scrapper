@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from lexicon.lexicon_ru import KEYBOARDS
+from lexicon.lexicon_eng import KEYBOARDS
 
 to_baires_btn = KeyboardButton(text=KEYBOARDS['to_baires_btn'])
 
