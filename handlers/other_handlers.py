@@ -8,4 +8,4 @@ rt = Router()
 
 @rt.message()
 async def echo_handler(message: Message, state: FSMContext) -> None:
-    await message.answer('Не понял, нажмите на кнопку ниже, либо выполните команду /help')
+    await message.answer('Sorry, can\'t understand, please press the button below or choose the command /help')

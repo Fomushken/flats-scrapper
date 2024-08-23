@@ -4,7 +4,7 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from states.states import FSMBairesScrap
 from keyboards.main_keyboard import main_kb
-from lexicon.lexicon_ru import LEXICON
+from lexicon.lexicon_eng import LEXICON
 
 
 rt = Router()
