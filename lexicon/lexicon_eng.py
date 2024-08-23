@@ -3,9 +3,10 @@ LEXICON: dict[str, str] = {
 'Enter the /help command to learn about my functionality\n\n'
 '<b>Below you can choose a category</b>',
     '/help': 'I can currently only send raw data about apartments in Buenos Aires from the Argenprop website. To do this, just click the button below.',
-    '/mydev': 'Попозже доработаю эту команду',
+    # '/mydev': 'later',
     'unsubscribe': 'You\'ve unsibscribed',
-    'subscribe': 'You have subscribed'
+    'subscribe': 'You have subscribed',
+    'to_baires': 'Press the button below'
 }
 
 COMMANDS: dict[str, str] = {
