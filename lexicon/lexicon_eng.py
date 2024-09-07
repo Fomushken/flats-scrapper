@@ -3,7 +3,7 @@ LEXICON: dict[str, str] = {
 'Enter the /help command to learn about my functionality\n\n'
 '<b>Below you can choose a category</b>',
     '/help': 'I can currently only send raw data about apartments in Buenos Aires from the Argenprop website. To do this, just click the button below.',
-    # '/mydev': 'later',
+    '/mydev': 'You can contact my developer with button below',
     'unsubscribe': 'You\'ve unsibscribed',
     'subscribe': 'You have subscribed',
     'to_baires': 'Press the button below',
@@ -20,6 +20,7 @@ KEYBOARDS: dict[str, str] = {
     'to_baires_btn': 'Buenos Aires Listings',
     'back_btn': 'Back',
     'subscribe_btn': 'Subscribe',
-    'unsubscribe_btn': 'Unsubscribe'
+    'unsubscribe_btn': 'Unsubscribe',
+    'dev_btn': 'Contact'
 }
 
