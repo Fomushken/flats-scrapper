@@ -21,6 +21,8 @@ KEYBOARDS: dict[str, str] = {
     'back_btn': 'Back',
     'subscribe_btn': 'Subscribe',
     'unsubscribe_btn': 'Unsubscribe',
-    'dev_btn': 'Contact'
+    'dev_tg_btn': 'Telegram',
+    'dev_linkedin_btn': 'LinkedIn',
+    'dev_github_btn': 'GitHub'
 }
 
