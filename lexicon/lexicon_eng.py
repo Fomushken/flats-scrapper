@@ -2,7 +2,7 @@ LEXICON: dict[str, str] = {
     '/start': '<b>Hello, {}!</b>\nI am a multifunctional bot, still in training,'  # the user's full name is inserted in place of {}
 'Enter the /help command to learn about my functionality\n\n'
 '<b>Below you can choose a category</b>',
-    '/help': 'I can currently only send raw data about apartments in Buenos Aires from the Argenprop website. To do this, just click the button below.',
+    '/help': 'I can currently only send translated data about apartments in Buenos Aires from the Argenprop website.',
     '/mydev': 'You can contact my developer with button below',
     'unsubscribe': 'You\'ve unsibscribed',
     'subscribe': 'You have subscribed',
