@@ -13,7 +13,7 @@ dev_linkedin_button = InlineKeyboardButton(
 )
 
 dev_github_button = InlineKeyboardButton(
-    text=KEYBOARDS['dev_bithub_btn'],
+    text=KEYBOARDS['dev_github_btn'],
     url='https://github.com/Fomushken'
 )
 
